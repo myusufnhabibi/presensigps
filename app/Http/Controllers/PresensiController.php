@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Redirect;
 
 class PresensiController extends Controller
 {
@@ -86,5 +88,42 @@ class PresensiController extends Controller
         $kilometers = $miles * 1.609344;
         $meters = $kilometers * 1000;
         return compact('meters');
+    }
+
+    public function updateProfile()
+    {
+        return view('presensi.update-profile');
+    }
+
+    public function prosesupdateprofile(Request $request)
+    {
+        $nik = Auth::guard('karyawan')->user()->nik;
+        $nama_lengkap = $request->nama_lengkap;
+        $no_hp = $request->no_hp;
+        $password = $request->password;
+        $karyawan = DB::table('karyawan')->where('nik', $nik)->first();
+
+        $data = [
+            'nama_lengkap' => $nama_lengkap,
+            'no_hp' => $no_hp,
+            'password' => empty($password) ? $karyawan->password : Hash::make($password),
+            'foto' => $request->hasFile('foto') ? $nik . '.' . $request->file('foto')->getClientOriginalExtension() : $karyawan->foto
+        ];
+
+        $update = DB::table('karyawan')->where('nik', $nik)->update($data);
+        if ($update) {
+            if ($request->hasFile('foto')) {
+                //bug
+                if (Storage::exists($karyawan->foto)) {
+                    Storage::delete($karyawan->foto);
+                }
+
+                $path = '/public/uploads/karyawan/';
+                $request->file('foto')->storeAs($path, $nik . '.' . $request->file('foto')->getClientOriginalExtension());
+            }
+            return Redirect::back()->with('success', 'Data profile berhasil diupdate');
+        } else {
+            return Redirect::back()->with('danger', 'Data profile gagal diupdate');
+        }
     }
 }

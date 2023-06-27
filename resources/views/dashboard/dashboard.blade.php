@@ -3,11 +3,18 @@
     <div class="section" id="user-section">
         <div id="user-detail">
             <div class="avatar">
-                <img src="assets/img/sample/avatar/avatar1.jpg" alt="avatar" class="imaged w64 rounded">
+                @php
+                    $path = Storage::url('uploads/karyawan/' . Auth::guard()->user()->foto);
+                @endphp
+                @if (Auth::guard()->user()->foto != null)
+                    <img src="{{ url($path) }}" alt="avatar" class="imaged w64 rounded">
+                @else
+                    <img src="assets/img/sample/avatar/avatar1.jpg" alt="avatar" class="imaged w64 rounded">
+                @endif
             </div>
             <div id="user-info">
-                <h2 id="user-name">Adam Abdi Al A'la</h2>
-                <span id="user-role">Head of IT</span>
+                <h2 id="user-name">{{ Auth::guard('karyawan')->user()->nama_lengkap }}</h2>
+                <span id="user-role">{{ Auth::guard('karyawan')->user()->jabatan }}</span>
             </div>
         </div>
     </div>
@@ -117,7 +124,7 @@
                     <div class="card">
                         <div class="card-body text-center" style="padding: 16px 12px !important">
                             <span class="badge bg-danger"
-                                style="position: absolute; top: 5px; right:10px; font-size: 0.6rem; z-index:99">10</span>
+                                style="position: absolute; top: 5px; right:10px; font-size: 0.6rem; z-index:99">{{ $rekap->hadir }}</span>
                             <ion-icon name="accessibility-outline" style="font-size: 1.6rem" class="text-success">
                             </ion-icon>
                             <br>
@@ -129,10 +136,10 @@
                     <div class="card">
                         <div class="card-body text-center" style="padding: 16px 12px !important">
                             <span class="badge bg-danger"
-                                style="position: absolute; top: 5px; right:10px; font-size: 0.6rem; z-index:99">10</span>
-                            <ion-icon name="newspaper-outline" style="font-size: 1.6rem" class="text-primary"></ion-icon>
+                                style="position: absolute; top: 5px; right:10px; font-size: 0.6rem; z-index:99">{{ $rekap->telat }}</span>
+                            <ion-icon name="alarm-outline" style="font-size: 1.6rem" class="text-danger"></ion-icon>
                             <br>
-                            <span style="font-size: 0.8rem; font-weight:500">Izin</span>
+                            <span style="font-size: 0.8rem; font-weight:500">Telat</span>
                         </div>
                     </div>
                 </div>
@@ -140,7 +147,7 @@
                     <div class="card">
                         <div class="card-body text-center" style="padding: 16px 12px !important">
                             <span class="badge bg-danger"
-                                style="position: absolute; top: 5px; right:10px; font-size: 0.6rem; z-index:99">10</span>
+                                style="position: absolute; top: 5px; right:10px; font-size: 0.6rem; z-index:99">0</span>
                             <ion-icon name="medkit-outline" style="font-size: 1.6rem " class="text-warning"></ion-icon>
                             <br>
                             <span style="font-size: 0.8rem; font-weight:500">Sakit</span>
@@ -151,10 +158,10 @@
                     <div class="card">
                         <div class="card-body text-center" style="padding: 16px 12px !important">
                             <span class="badge bg-danger"
-                                style="position: absolute; top: 5px; right:10px; font-size: 0.6rem; z-index:99">10</span>
-                            <ion-icon name="alarm-outline" style="font-size: 1.6rem" class="text-danger"></ion-icon>
+                                style="position: absolute; top: 5px; right:10px; font-size: 0.6rem; z-index:99">0</span>
+                            <ion-icon name="newspaper-outline" style="font-size: 1.6rem" class="text-primary"></ion-icon>
                             <br>
-                            <span style="font-size: 0.8rem; font-weight:500">Telat</span>
+                            <span style="font-size: 0.8rem; font-weight:500">Izin</span>
                         </div>
                     </div>
                 </div>
@@ -187,10 +194,9 @@
                                     </div>
                                     <div class="in">
                                         <div>{{ $bln->tgl_presensi }}</div>
+                                        <span class="badge badge-success">{{ $bln->jam_in }}</span>
                                         <span
-                                            class="badge badge-success">{{ date('d-m-Y', strtotime($bln->tgl_presensi)) }}</span>
-                                        <span
-                                            class="badge badge-danger">{{ $presensi != null && $presensi->jam_out != null ? $presensi->jam_out : 'Belum Absen' }}</span>
+                                            class="badge badge-danger">{{ $bln != null && $bln->jam_out != null ? $bln->jam_out : 'Belum Absen' }}</span>
                                     </div>
                                 </div>
                             </li>
@@ -199,48 +205,24 @@
                 </div>
                 <div class="tab-pane fade" id="profile" role="tabpanel">
                     <ul class="listview image-listview">
-                        <li>
-                            <div class="item">
-                                <img src="assets/img/sample/avatar/avatar1.jpg" alt="image" class="image">
-                                <div class="in">
-                                    <div>Edward Lindgren</div>
-                                    <span class="text-muted">Designer</span>
+                        @foreach ($leaderboard as $item)
+                            <li>
+                                <div class="item">
+                                    <img src="assets/img/sample/avatar/avatar1.jpg" alt="image" class="image">
+                                    <div class="in">
+                                        <div>
+                                            <b>{{ $item->nama_lengkap }}</b>
+                                            <br>
+                                            <small class="text-muted">{{ $item->jabatan }}</small>
+                                        </div>
+                                        <span class="badge {{ $item->jam_in > '07:00' ? 'bg-danger' : 'bg-success' }}">
+                                            {{ $item->jam_in }}
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <img src="assets/img/sample/avatar/avatar1.jpg" alt="image" class="image">
-                                <div class="in">
-                                    <div>Emelda Scandroot</div>
-                                    <span class="badge badge-primary">3</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <img src="assets/img/sample/avatar/avatar1.jpg" alt="image" class="image">
-                                <div class="in">
-                                    <div>Henry Bove</div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <img src="assets/img/sample/avatar/avatar1.jpg" alt="image" class="image">
-                                <div class="in">
-                                    <div>Henry Bove</div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <img src="assets/img/sample/avatar/avatar1.jpg" alt="image" class="image">
-                                <div class="in">
-                                    <div>Henry Bove</div>
-                                </div>
-                            </div>
-                        </li>
+                            </li>
+                        @endforeach
+
                     </ul>
                 </div>
 

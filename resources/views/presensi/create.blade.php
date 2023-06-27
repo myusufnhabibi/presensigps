@@ -6,7 +6,7 @@
                 <ion-icon name="chevron-back-outline"></ion-icon>
             </a>
         </div>
-        <div class="pageTitle">E - Presensi</div>
+        <div class="pageTitle">Absen</div>
         <div class="right"></div>
     </div>
 @endsection
