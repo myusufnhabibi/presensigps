@@ -34,7 +34,7 @@ class DashboradController extends Controller
             ->orderBy('jam_in')
             ->get();
         // dd($presensi_bln_ini);
-        $bulan = ["", 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'July', 'Agustus', 'September', 'Oktober', 'November', 'Desemver'];
+        $bulan = ["", 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'July', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
         $bulan_ini = $bulan[$month];
         return view('dashboard.dashboard', compact('presensi', 'presensi_bln_ini', 'bulan_ini', 'rekap', 'leaderboard'));
     }

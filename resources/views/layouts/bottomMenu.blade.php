@@ -6,7 +6,7 @@
             <strong>Home</strong>
         </div>
     </a>
-    <a href="#" class="item {{ request()->is('calender') ? 'active' : '' }}">
+    <a href="/presensi/history" class="item {{ request()->is('presensi/history') ? 'active' : '' }}">
         <div class="col">
             <ion-icon name="calendar-outline" role="img" class="md hydrated" aria-label="calendar outline">
             </ion-icon>
@@ -27,7 +27,7 @@
             <strong>Izin</strong>
         </div>
     </a>
-    <a href="/presensi/update-profile" class="item">
+    <a href="/presensi/update-profile" class="item {{ request()->is('presensi/update-profile') ? 'active' : '' }}">
         <div class="col">
             <ion-icon name="people-outline" role="img" class="md hydrated" aria-label="people outline">
             </ion-icon>
