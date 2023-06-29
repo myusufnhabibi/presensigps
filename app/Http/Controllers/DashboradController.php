@@ -33,9 +33,18 @@ class DashboradController extends Controller
             ->where('tgl_presensi', $hari_ini)
             ->orderBy('jam_in')
             ->get();
+
+        $rekapizin = DB::table('pengajuan_izin')
+            ->selectRaw("SUM(IF(izin='i',1,0)) as izin, SUM(IF(izin='s',1,0)) as ssakit")
+            ->where('nik', $nik)
+            ->whereMonth('tgl_izin', '=', $month)
+            ->whereYear('tgl_izin', '=', $year)
+            ->where('status', '1')
+            ->first();
+
         // dd($presensi_bln_ini);
         $bulan = ["", 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'July', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
         $bulan_ini = $bulan[$month];
-        return view('dashboard.dashboard', compact('presensi', 'presensi_bln_ini', 'bulan_ini', 'rekap', 'leaderboard'));
+        return view('dashboard.dashboard', compact('presensi', 'presensi_bln_ini', 'bulan_ini', 'rekap', 'leaderboard', 'rekapizin'));
     }
 }
