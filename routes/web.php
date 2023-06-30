@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ADashboardController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboradController;
 use App\Http\Controllers\PresensiController;
@@ -25,6 +26,13 @@ Route::middleware(['guest:karyawan'])->group(function () {
     Route::post('/proseslogin', [AuthController::class, 'proseslogin']);
 });
 
+Route::middleware(['guest:user'])->group(function () {
+    Route::get('/panel', function () {
+        return view('auth.loginadmin');
+    })->name('loginadmin');
+    Route::post('/prosesloginadmin', [AuthController::class, 'prosesloginadmin']);
+});
+
 Route::middleware(['auth:karyawan'])->group(function () {
     Route::get('/dashboard', [DashboradController::class, 'index']);
     Route::get('/proseslogout', [AuthController::class, 'proseslogout']);
@@ -37,4 +45,9 @@ Route::middleware(['auth:karyawan'])->group(function () {
     Route::get('/presensi/izin', [PresensiController::class, 'izin']);
     Route::get('/presensi/buatizin', [PresensiController::class, 'buatizin']);
     Route::post('/presensi/proses-buatizin', [PresensiController::class, 'prosesizin']);
+});
+
+Route::middleware(['auth:user'])->group(function () {
+    Route::get('/panel/dashboardadmin', [DashboradController::class, 'dashboardadmin']);
+    Route::get('/panel/proseslogout', [AuthController::class, 'proseslogoutadmin']);
 });

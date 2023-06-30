@@ -47,4 +47,9 @@ class DashboradController extends Controller
         $bulan_ini = $bulan[$month];
         return view('dashboard.dashboard', compact('presensi', 'presensi_bln_ini', 'bulan_ini', 'rekap', 'leaderboard', 'rekapizin'));
     }
+
+    public function dashboardadmin()
+    {
+        return view('admin.dashboard');
+    }
 }
