@@ -114,12 +114,13 @@ class PresensiController extends Controller
         if ($update) {
             if ($request->hasFile('foto')) {
                 //bug
-                if (Storage::exists($karyawan->foto)) {
-                    Storage::delete($karyawan->foto);
+                $path = '/public/uploads/karyawan/' . $karyawan->foto;
+                if (Storage::exists($path)) {
+                    Storage::delete($path);
                 }
 
-                $path = '/public/uploads/karyawan/';
-                $request->file('foto')->storeAs($path, $nik . '.' . $request->file('foto')->getClientOriginalExtension());
+                $path2 = '/public/uploads/karyawan/';
+                $request->file('foto')->storeAs($path2, $nik . '.' . $request->file('foto')->getClientOriginalExtension());
             }
             return Redirect::back()->with('success', 'Data profile berhasil diupdate');
         } else {

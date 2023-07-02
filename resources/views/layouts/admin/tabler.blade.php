@@ -56,7 +56,7 @@
     <!-- Tabler Core -->
     <script src="{{ asset('tabler') }}/dist/js/tabler.min.js?1684106062" defer></script>
     <script src="{{ asset('tabler') }}/dist/js/demo.min.js?1684106062" defer></script>
-
+    @stack('myscript')
 </body>
 
 </html>

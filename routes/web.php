@@ -3,6 +3,7 @@
 use App\Http\Controllers\ADashboardController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboradController;
+use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\PresensiController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,4 +51,10 @@ Route::middleware(['auth:karyawan'])->group(function () {
 Route::middleware(['auth:user'])->group(function () {
     Route::get('/panel/dashboardadmin', [DashboradController::class, 'dashboardadmin']);
     Route::get('/panel/proseslogout', [AuthController::class, 'proseslogoutadmin']);
+    Route::get('/karyawan', [KaryawanController::class, 'index']);
+    Route::post('/karyawan/store', [KaryawanController::class, 'store']);
+    Route::post('/karyawan/cek_nik', [KaryawanController::class, 'cek_nik']);
+    Route::post('/karyawan/edit', [KaryawanController::class, 'edit']);
+    Route::post('/karyawan/update', [KaryawanController::class, 'update']);
+    Route::post('/karyawan/delete/{nik}', [KaryawanController::class, 'delete']);
 });

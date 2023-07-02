@@ -50,6 +50,18 @@ class DashboradController extends Controller
 
     public function dashboardadmin()
     {
-        return view('admin.dashboard');
+        $month = date('m') * 1;
+        $year = date('Y');
+        $rekap = DB::table('presensi')->selectRaw("count(nik) as hadir, SUM(IF(jam_in > '07:00',1,0)) as telat")
+            ->whereMonth('tgl_presensi', '=', $month)
+            ->whereYear('tgl_presensi', '=', $year)
+            ->first();
+        $rekapizin = DB::table('pengajuan_izin')
+            ->selectRaw("SUM(IF(izin='i',1,0)) as izin, SUM(IF(izin='s',1,0)) as ssakit")
+            ->whereMonth('tgl_izin', '=', $month)
+            ->whereYear('tgl_izin', '=', $year)
+            ->where('status', '1')
+            ->first();
+        return view('admin.dashboard', compact('rekap', 'rekapizin'));
     }
 }
