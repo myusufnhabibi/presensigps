@@ -203,7 +203,7 @@
         <div class="collapse navbar-collapse" id="sidebar-menu">
             <ul class="navbar-nav pt-lg-3">
                 <li class="nav-item">
-                    <a class="nav-link" href="./">
+                    <a class="nav-link" href="/panel/dashboardadmin">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <!-- Download SVG icon from http://tabler-icons.io/i/home -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -252,6 +252,25 @@
                             </div>
                         </div>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/monitor-presensi">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-check"
+                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
+                                <path
+                                    d="M11.143 17.961c-3.221 -.295 -5.936 -2.281 -8.143 -5.961c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.222 .37 -.449 .722 -.68 1.057">
+                                </path>
+                                <path d="M15 19l2 2l4 -4"></path>
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">
+                            Monitoring Presensi
+                        </span>
+                    </a>
                 </li>
             </ul>
         </div>

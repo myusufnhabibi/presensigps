@@ -159,7 +159,6 @@ class PresensiController extends Controller
 
     public function buatizin()
     {
-
         return view('presensi.buatizin');
     }
 
@@ -185,5 +184,32 @@ class PresensiController extends Controller
             DB::table('pengajuan_izin')->insert($data);
             return redirect()->to('/presensi/izin')->with('success', 'Buat Izin berhasil');
         }
+    }
+
+    public function monitoring()
+    {
+        return view('admin.monitor-presensi');
+    }
+
+    public function getMonitor(Request $request)
+    {
+        $tgl = $request->tgl;
+
+        $results = DB::table('presensi')
+            ->select('presensi.*', 'departemen.nama_dep', 'karyawan.nama_lengkap')
+            ->join('karyawan', 'presensi.nik', '=', 'karyawan.nik')
+            ->join('departemen', 'karyawan.kode_dep', '=', 'departemen.kode_dep')
+            ->where('tgl_presensi', $tgl)
+            ->orderBy('karyawan.nama_lengkap')
+            ->paginate(5);
+
+        return view('admin.get-monitoring', compact('results'));
+    }
+
+    public function showmap(Request $request)
+    {
+        $id = $request->id;
+        $hasil = DB::table('presensi')->where('id', $id)->first();
+        return view('admin.showmap', compact('hasil'));
     }
 }

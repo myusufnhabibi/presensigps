@@ -22,6 +22,7 @@ class DashboradController extends Controller
             ->get();
 
         $rekap = DB::table('presensi')->selectRaw("count(nik) as hadir, SUM(IF(jam_in > '07:00',1,0)) as telat")
+            ->where('nik', $nik)
             ->whereMonth('tgl_presensi', '=', $month)
             ->whereYear('tgl_presensi', '=', $year)
             ->groupBy('nik')

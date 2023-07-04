@@ -20,6 +20,7 @@
     <link href="{{ asset('tabler') }}/dist/css/tabler-payments.min.css?1684106062" rel="stylesheet" />
     <link href="{{ asset('tabler') }}/dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet" />
     <link href="{{ asset('tabler') }}/dist/css/demo.min.css?1684106062" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         @import url('https://rsms.me/inter/inter.css');
 
@@ -56,6 +57,7 @@
     <!-- Tabler Core -->
     <script src="{{ asset('tabler') }}/dist/js/tabler.min.js?1684106062" defer></script>
     <script src="{{ asset('tabler') }}/dist/js/demo.min.js?1684106062" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     @stack('myscript')
 </body>
 
