@@ -212,4 +212,61 @@ class PresensiController extends Controller
         $hasil = DB::table('presensi')->where('id', $id)->first();
         return view('admin.showmap', compact('hasil'));
     }
+
+    public function rekap()
+    {
+
+        $bulans = ["", 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'July', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        return view('admin.rekap-presensi', compact('bulans'));
+    }
+
+    public function getRekap(Request $request)
+    {
+        $month = $request->bulan;
+        $year = $request->tahun;
+        $calday = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+
+        $results = DB::table('presensi')
+            ->select('presensi.nik', 'nama_lengkap')
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=1, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_1")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=2, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_2")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=3, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_3")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=4, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_4")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=5, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_5")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=6, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_6")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=7, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_7")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=8, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_8")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=9, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_9")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=10, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_10")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=11, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_11")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=12, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_12")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=13, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_13")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=14, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_14")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=15, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_15")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=16, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_16")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=17, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_17")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=18, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_18")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=19, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_19")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=20, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_20")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=21, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_21")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=22, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_22")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=23, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_23")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=24, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_24")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=25, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_25")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=26, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_26")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=27, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_27")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=28, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_28")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=29, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_29")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=30, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_30")
+            ->selectRaw("MAX(IF(DAY(tgl_presensi)=31, CONCAT(jam_in,'-',IFNULL(jam_out,'00:00:00')),'')) as tgl_31")
+            ->whereMonth('tgl_presensi', '=', $month)
+            ->whereYear('tgl_presensi', '=', $year)
+            ->join('karyawan', 'presensi.nik', '=', 'karyawan.nik')
+            ->join('departemen', 'karyawan.kode_dep', '=', 'departemen.kode_dep')
+            ->groupBy('presensi.nik', 'karyawan.nama_lengkap')
+            ->orderBy('karyawan.nama_lengkap')
+            ->paginate(5);
+        // dd($results);
+        return view('admin.get-rekap', compact('results', 'calday'));
+    }
 }
