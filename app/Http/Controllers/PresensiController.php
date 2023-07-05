@@ -13,10 +13,11 @@ class PresensiController extends Controller
 {
     public function create()
     {
+        $lokasi = DB::table('lokasi_kantor')->where('id', 1)->first();
         $nik = Auth::guard('karyawan')->user()->nik;
         $hari_ini = date('Y-m-d');
         $cek = DB::table('presensi')->where('nik', $nik)->where('tgl_presensi', $hari_ini)->count();
-        return view('presensi.create', compact('cek'));
+        return view('presensi.create', compact('cek', 'lokasi'));
     }
 
     public function store(Request $request)
@@ -41,7 +42,8 @@ class PresensiController extends Controller
         $file = $folderPath . $filename;
         $jarak = $this->distance($lat_kantor, $long_kantor, $lat_user, $long_user);
         $radius = round($jarak['meters']);
-        if ($radius > 150) {
+        $pos = DB::table('lokasi_kantor')->where('id', 1)->first();
+        if ($radius > $pos->radius) {
             echo "failed|Maaf Radius anda " . $radius . " Meter dari Kantor";
         } else {
             if ($cek > 0) {
@@ -209,8 +211,9 @@ class PresensiController extends Controller
     public function showmap(Request $request)
     {
         $id = $request->id;
+        $lokasi = DB::table('lokasi_kantor')->where('id', 1)->first();
         $hasil = DB::table('presensi')->where('id', $id)->first();
-        return view('admin.showmap', compact('hasil'));
+        return view('admin.showmap', compact('hasil', 'lokasi'));
     }
 
     public function rekap()

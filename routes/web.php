@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\ADashboardController;
+use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboradController;
 use App\Http\Controllers\DepartemenController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\PresensiController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -72,4 +74,12 @@ Route::middleware(['auth:user'])->group(function () {
     Route::post('/showmap', [PresensiController::class, 'showmap']);
     Route::get('/rekap-presensi', [PresensiController::class, 'rekap']);
     Route::post('/getRekap', [PresensiController::class, 'getRekap']);
+
+    Route::get('/approval', [ApprovalController::class, 'index']);
+    Route::post('/approval/edit', [ApprovalController::class, 'edit']);
+    Route::post('/approval/update', [ApprovalController::class, 'update']);
+    Route::post('/approval/destroy/{id}', [ApprovalController::class, 'destroy']);
+
+    Route::get('/set-lokasikantor', [SettingController::class, 'setLokasi']);
+    Route::post('/update', [SettingController::class, 'update']);
 });
